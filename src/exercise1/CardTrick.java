@@ -11,6 +11,8 @@ import java.util.*;
  */
 public class CardTrick {
     
+    static int crdVal,crdSuit;
+    
     public static void main(String[] args) {
         
         Scanner in = new Scanner(System.in);
@@ -34,24 +36,28 @@ public class CardTrick {
         
         Card usrCard = new Card();
         
-        System.out.print("Enter the card value (1-13, 1 for Ace, 11 for Jack, 12 for Queen, 13 for King: ");
+        System.out.print("Enter the card value and suit(1-13, 1 for Ace, 11 for Jack, 12 for Queen, 13 for King\n"
+                + "Valid Values should be like 12 diamond, 1 spade, 5 CLUBS, Heart 13, spade 5\nOrder and case doesn't matter:  ");
         
-        usrCard.setValue((in.nextInt()));
+        String cardVal = in.nextLine();
         
-        System.out.print("Enter the card suit (1 for Hearts, 2 for Diamonds, 3 for Spades, 4 for Clubs):");
         
-        usrCard.setSuit(Card.SUITS[(in.nextInt()-1)]);
+        setCardValues(cardVal);
+        
+        usrCard.setValue(crdVal);
+        usrCard.setSuit(Card.SUITS[crdSuit]);
+        
         
         System.out.println(usrCard);
         
         boolean a = false;
         for (int i=0; i<hand.length; i++)
         {
-            if(usrCard.getValue() == hand[i].getValue() && usrCard.getSuit() == hand[i].getSuit()){
+            if(usrCard.getValue() == hand[i].getValue() && usrCard.getSuit() == hand[i].getSuit())
+            {
                 a = true;
             }
-            else
-                continue;
+  
         }
         
         if (a){
@@ -87,7 +93,7 @@ public class CardTrick {
         System.out.println("Congratulations, you guessed right!");
         System.out.println();
         
-        System.out.println("My name is Nithin Pinky Tenson");
+        System.out.println("My name is Nithin Pinky Tennison");
         System.out.println();
         
         System.out.println("My career ambitions: To become Programmer");
@@ -104,6 +110,80 @@ public class CardTrick {
         System.out.println();
         
     
+    }
+    
+    private static void setCardValues(String cardVal)
+    {
+            String p1="",p2="";
+            boolean spc = true;
+        for (int i=0; i<cardVal.length(); i++)
+        
+        {
+            if( (spc) && cardVal.charAt(i) == ' ')
+            {
+                spc = false;
+                continue;
+            }
+            
+            if(spc)
+            {
+                p1 = p1+cardVal.charAt(i);
+            }
+            else
+            {
+                p2 = p2+cardVal.charAt(i);
+            }
+            
+            
+            
+            
+            
+        }
+        
+        if(isNumeric(p1))
+        {
+            crdVal = Integer.parseInt(p1);
+            crdSuit = suitFinder(p2);
+        }
+        else 
+        {
+            crdVal = Integer.parseInt(p2);
+            crdSuit = suitFinder(p1);
+        }
+        System.out.println(p1+" "+p2);  
+    }
+    
+    private static boolean isNumeric(String str) { 
+        try {  
+            Double.parseDouble(str); 
+            return true;
+        }
+        catch(NumberFormatException e){  
+            return false;  
+        }  
+}
+    private static int suitFinder(String suit)
+    {
+        if(suit.equalsIgnoreCase("hearts") || suit.equalsIgnoreCase("heart") )
+        {
+            return 0;
+        }
+        else if (suit.equalsIgnoreCase("diamond") || suit.equalsIgnoreCase("diamonds"))
+        {
+            return 1;
+        }
+        else if (suit.equalsIgnoreCase("spade") || suit.equalsIgnoreCase("spades"))
+        {
+            return 2;
+        }
+        else if (suit.equalsIgnoreCase("clubs") || suit.equalsIgnoreCase("club") )
+        {
+            return 3;
+        }
+        else 
+        {
+            return 0;
+        }
     }
 
 }
